@@ -12,7 +12,7 @@ import {
   SectionEnd,
   Address,
   Icon,
-} from './restaurant-info-card.styles'
+} from './restaurantInfoCard.styles'
 import star from '../../../../assets/star'
 import open from '../../../../assets/open'
 
@@ -34,7 +34,11 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
 
   return (
     <RestaurantCard elevation={5}>
-      <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
+      <RestaurantCardCover
+        key={name}
+        source={{ uri: photos[0] }}
+        onError={({ nativeEvent: { error } }) => console.log('ERROR', error)}
+      />
       <Info>
         <Text variant="label">{name}</Text>
         <Section>
