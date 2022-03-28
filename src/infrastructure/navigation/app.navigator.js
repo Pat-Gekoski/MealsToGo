@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
-import { Text } from 'react-native'
+import { Text, Button } from 'react-native'
 
 import { theme } from '../../infrastructure/theme'
 import { RestaurantNavigator } from './restaurants.navigator'
+import { RestaurantsContextProvider } from '../../services/restaurants/restaurants.context'
+import { LocationContextProvider } from '../../services/location/location.context'
+import { FavoritesContextProvider } from '../../services/favorites/favorites.context'
 import { MapScreen } from '../../features/map/screens/Map.screen'
 import { SafeArea } from '../../components/util/SafeArea.component'
+
+import { AuthenticationContext } from '../../services/authentication/authentication.context'
 
 const Tab = createBottomTabNavigator()
 
@@ -17,9 +22,11 @@ const TAB_ICON = {
 }
 
 function SettingsScreen() {
+  const { onLogout } = useContext(AuthenticationContext)
   return (
     <SafeArea>
       <Text>Settings!</Text>
+      <Button title="Logout" onPress={() => onLogout()} />
     </SafeArea>
   )
 }
@@ -38,10 +45,16 @@ const tabScreenOptions = ({ route }) => {
 
 export const AppNavigator = () => {
   return (
-    <Tab.Navigator screenOptions={tabScreenOptions}>
-      <Tab.Screen name="Restaurants" component={RestaurantNavigator} />
-      <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
-    </Tab.Navigator>
+    <FavoritesContextProvider>
+      <LocationContextProvider>
+        <RestaurantsContextProvider>
+          <Tab.Navigator screenOptions={tabScreenOptions}>
+            <Tab.Screen name="Restaurants" component={RestaurantNavigator} />
+            <Tab.Screen name="Map" component={MapScreen} />
+            <Tab.Screen name="Settings" component={SettingsScreen} />
+          </Tab.Navigator>
+        </RestaurantsContextProvider>
+      </LocationContextProvider>
+    </FavoritesContextProvider>
   )
 }
