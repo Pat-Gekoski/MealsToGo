@@ -24,7 +24,7 @@ const Loading = styled(ActivityIndicator)`
 `
 
 export const RestaurantsScreen = ({ navigation }) => {
-  const { restaurants, isLoading, error } = useContext(RestaurantsContext)
+  const { restaurants, isLoading } = useContext(RestaurantsContext)
   const { favorites } = useContext(FavoritesContext)
   const [isToggled, setIsToggled] = useState(false)
 
