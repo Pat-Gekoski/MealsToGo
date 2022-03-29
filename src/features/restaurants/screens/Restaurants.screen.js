@@ -5,6 +5,7 @@ import styled from 'styled-components/native'
 
 import { SafeArea } from '../../../components/util/SafeArea.component'
 import { Spacer } from '../../../components/spacer/Spacer.component'
+import { FadeInView } from '../../../components/animations/fade.animation'
 import { FavoritesBar } from '../../../components/favorite/FavoritesBar.component'
 import { RestaurantInfoCard } from '../components/RestaurantInfoCard.component'
 import { Search } from '../components/Search.component'
@@ -51,9 +52,11 @@ export const RestaurantsScreen = ({ navigation }) => {
               navigation.navigate('Restaurant Detail', { restaurant: item })
             }
           >
-            <Spacer position="bottom" size="large">
-              <RestaurantInfoCard restaurant={item} />
-            </Spacer>
+            <FadeInView>
+              <Spacer position="bottom" size="large">
+                <RestaurantInfoCard restaurant={item} />
+              </Spacer>
+            </FadeInView>
           </TouchableOpacity>
         )}
         keyExtractor={(item) => item.name}
