@@ -9,7 +9,6 @@ import { RestaurantsContextProvider } from '../../services/restaurants/restauran
 import { LocationContextProvider } from '../../services/location/location.context'
 import { FavoritesContextProvider } from '../../services/favorites/favorites.context'
 import { MapScreen } from '../../features/map/screens/Map.screen'
-import { SettingsScreen } from '../../features/settings/screens/Settings.screen'
 
 const Tab = createBottomTabNavigator()
 

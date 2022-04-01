@@ -12,18 +12,19 @@ const Map = styled(MapView)`
   width: 100%;
 `
 
-export const MapScreen = ({ navigation }) => {
+const RestaurantMap = ({ navigation }) => {
   const { location } = useContext(LocationContext)
   const { restaurants = [] } = useContext(RestaurantsContext)
 
   const [latDelta, setLatDelta] = useState(0)
+
   const { lat, lng, viewport } = location
 
   useEffect(() => {
     const northeastLat = viewport.northeast.lat
     const southwestLat = viewport.southwest.lat
-    const delta = northeastLat - southwestLat
-    setLatDelta(delta)
+
+    setLatDelta(northeastLat - southwestLat)
   }, [location, viewport])
 
   return (
@@ -49,7 +50,9 @@ export const MapScreen = ({ navigation }) => {
             >
               <MapView.Callout
                 onPress={() =>
-                  navigation.navigate('Restaurant Detail', { restaurant })
+                  navigation.navigate('RestaurantDetail', {
+                    restaurant,
+                  })
                 }
               >
                 <MapCallout restaurant={restaurant} />
@@ -60,4 +63,19 @@ export const MapScreen = ({ navigation }) => {
       </Map>
     </>
   )
+}
+
+export const MapScreen = ({ navigation }) => {
+  const { location } = useContext(LocationContext)
+  if (!location) {
+    return (
+      <Map
+        region={{
+          latitude: 0,
+          longitude: 0,
+        }}
+      />
+    )
+  }
+  return <RestaurantMap navigation={navigation} />
 }

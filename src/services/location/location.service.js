@@ -1,15 +1,16 @@
 import camelize from 'camelize'
-
-import { locations } from './location.mock'
+import axios from 'axios'
+import { host, isMock } from '../../utils/env'
 
 export const locationRequest = (searchTerm) => {
-  return new Promise((resolve, reject) => {
-    const locationMock = locations[searchTerm]
-    if (!locationMock) {
-      reject('not found')
-    }
-    resolve(locationMock)
-  })
+  return axios
+    .get(`${host}/geocode`, {
+      params: {
+        city: searchTerm,
+        mock: isMock,
+      },
+    })
+    .then((res) => res.data)
 }
 
 export const locationTransform = (result) => {

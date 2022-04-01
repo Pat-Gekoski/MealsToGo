@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { LogBox } from 'react-native'
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar'
 import { ThemeProvider } from 'styled-components/native'
@@ -20,7 +20,6 @@ import { AuthenticationContextProvider } from './src/services/authentication/aut
 
 export default function App() {
   LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native'])
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const firebaseConfig = {
     apiKey: 'AIzaSyCGa3TpM1IoCIFpJjFtQXKKu9-jInzxvs4',
@@ -31,19 +30,9 @@ export default function App() {
     appId: '1:307132062271:web:65f9e98096dd1aa594f68a',
   }
 
-  let app
   if (!getApps().length) {
-    app = initializeApp(firebaseConfig)
+    initializeApp(firebaseConfig)
   }
-
-  // useEffect(() => {
-  //   const auth = getAuth(app)
-  //   signInWithEmailAndPassword(auth, 'patgekoski@gmail.com', 'password')
-  //     .then(({ user }) => {
-  //       setIsAuthenticated(true)
-  //     })
-  //     .catch((err) => console.log('ERROR: ', err))
-  // }, [app])
 
   const [oswaldLoaded] = useOswald({
     Oswald_400Regular,
